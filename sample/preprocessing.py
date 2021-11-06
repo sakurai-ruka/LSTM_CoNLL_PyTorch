@@ -9,8 +9,8 @@ import collections
 from torchtext import data, datasets
 import pickle as cPickle
 
-target_dir = '/home/sakurai/git/NER/corpus/CoNLL-2003/'
-train_file = target_dir + 'eng.train'
+target_dir = '/home/sakurai/git/LSTM_CoNLL_PyTorch/sample/'
+train_file = target_dir + 'kakikomi.txt'
 
 
 # In[95]:
@@ -79,5 +79,5 @@ labels_idx = [[label2idx[label] for label in labels] for labels in train_labels]
 # In[101]:
 
 
-cPickle.dump([word2idx, label2idx, sents_idx, labels_idx], open(target_dir + "CoNLL_train.pkl", "wb"))
+cPickle.dump([word2idx, label2idx, sents_idx, labels_idx], open(target_dir + "kakikomi.pkl", "wb"))
 
