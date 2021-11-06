@@ -29,7 +29,9 @@ def prepare_sequence(idxs):
 #データの前処理
 # target_dir = '/mnt/d/data/tagger/dataset/'
 target_dir = './'
-word_to_ix, tag_to_ix, sents_idx, labels_idx = cPickle.load(open(target_dir + "CoNLL_train.pkl", "rb"))
+#tag_to_ix
+#sents_idx
+word_to_ix,tag_to_ix,sents_idx,labels_idx = cPickle.load(open(target_dir + "kakikomi.pkl", "rb"))
 
 # training_data = [
 #     ("The dog ate the apple".split(), ["DET", "NN", "V", "DET", "NN"]),
