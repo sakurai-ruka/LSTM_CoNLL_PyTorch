@@ -76,10 +76,10 @@ def get_word_label(words, counts, tag_pos):
     results = []
     for word, count in zip(words, counts):
         label = get_label(tag_pos, count)
-        results.append((word, label))
+        results.append((word,'*','*' ,label))
         #results.append(('\n'))
     return results
-
+    
 def load_dumps(f):
     obj = []
     while 1:
@@ -92,24 +92,30 @@ def load_dumps(f):
 def generate_word_label_seq(in_str):
     words, counts = get_wakachi(in_str)
     flatten_str, tag_pos = flat_and_extract_tag_pos(in_str)
-    global results
-    for word, count in zip(words, counts):
-        label = get_label(tag_pos, count)
-        results = (word, label)
-        results = str(results)
-        results.strip(",")
+    #global results
+    #for word, count in zip(words, counts):
+       # label = get_label(tag_pos, count)
+        #results = (word, '*','*',label)
+        #results = str(results)
         #word_label_seq = results
-    #word_label_seq = get_word_label(words, counts, tag_pos)
+    word_label_seq = get_word_label(words, counts, tag_pos)
         #with open('kakikomi.pkl','ab') as f:
            # pickle.dump(results,f)
-        file1 = open('kakikomi.txt','a')
-        file1.write(results)
-        #file1.write(str(word_label_seq))
-        file1.write('\n')
-        file1.close()
+    file1 = open('kakikomi.txt','a')
+    #file1.write(results)
+    file1.write(str(word_label_seq))
+    file1.write('\n')
+    file1.close()
     #print(word_label_seq)
-    return results
+    return word_label_seq
     #return word_label_seq
+def exclude(in_str):
+    in_str.strip("'""("")")
+    file1 = open('kakikomi2.txt','a')
+    file1.write(in_str)
+    file1.write('\n')
+    file1.close()
+
 file2 = open('niku1105.txt','r')
 while True:
     in_str = file2.readline()
@@ -121,12 +127,19 @@ while True:
     else:
         break
 file2.close()
-file3 = open('kakikomi.txt','r')
-while True:
-    in_str =file3.readline()
-    if in_str:
-        with open('kakikomi.pkl','ab') as f:
-            pickle.dump(in_str,f)
-    else:
-        break
-file3.close()
+#ile3 = open('kakikomi.txt','r')
+#while True:
+    #in_str =file3.readline()
+    #if in_str:
+        #exclude(in_str)
+    #else:
+        #break
+#file3 = open('kakikomi.txt','r')
+#while True:
+    #in_str =file3.readline()
+    #if in_str:
+       #with open('kakikomi.pkl','ab') as f:
+           #pickle.dump(in_str,f)
+    #else:
+        #break
+#file3.close()
