@@ -46,8 +46,9 @@ word_to_ix,tag_to_ix,sents_idx,labels_idx = cPickle.load(open(target_dir + "kaki
 # tag_to_ix = {"DET": 0, "NN": 1, "V": 2}
 
 print(word_to_ix['I'])
+#print(word_to_ix[0])
 print(labels_idx[0])
-
+#print(sents_idx[0])
 # These will usually be more like 32 or 64 dimensional.
 # We will keep them small, so we can see how the weights change as we train.
 EMBEDDING_DIM = 64
@@ -95,7 +96,8 @@ model = model.to(device)
 # model = model.cuda()
 
 # inputs = prepare_sequence(training_data[0][0], word_to_ix)
-inputs = prepare_sequence(sents_idx[0])
+#inputs = prepare_sequence(sents_idx[0])
+inputs = prepare_sequence(labels_idx[0])
 inputs = inputs.to(device)
 tag_scores = model(inputs)
 _, pred_tag = torch.max(tag_scores.data, 1)
@@ -162,10 +164,13 @@ for epoch in range(EPOCHS):  # again, normally you would NOT do 300 epochs, it i
         total_loss += float(loss.detach().cpu().numpy())
         
     print('loss: %.4f' % loss)
-
+plus = 0
 # inputs = prepare_sequence(training_data[0][0], word_to_ix)
-inputs = prepare_sequence(sents_idx[0])
-tag_scores = model(inputs)
-_, pred_tag = torch.max(tag_scores.data, 1)
-print(pred_tag)
+word_to_ix,tag_to_ix,sents_idx,labels_idx = cPickle.load(open(target_dir + "rekakikomi.pkl", "rb"))
+for i in range(10):
+    inputs = prepare_sequence(sents_idx[plus])
+    tag_scores = model(inputs)
+    _, pred_tag = torch.max(tag_scores.data, 1)
+    plus += 1
+    print(pred_tag)
 
