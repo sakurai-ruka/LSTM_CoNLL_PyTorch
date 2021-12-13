@@ -21,11 +21,11 @@ environ["MECABRC"] = "/etc/mecabrc"
 tagger = MeCab.Tagger("-Owakati")
 
 # BERTトークナイザとBERTモデルの準備
-model = BertModel.from_pretrained(osp.join(root_dir, 'NICT_BERT-base_JapaneseWikipedia_32K_BPE'))
+bmodel = BertModel.from_pretrained(osp.join(root_dir, 'NICT_BERT-base_JapaneseWikipedia_32K_BPE'))
 tokenizer = BertTokenizer.from_pretrained(osp.join(root_dir, 'NICT_BERT-base_JapaneseWikipedia_32K_BPE'))
-device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-model.to(device)
-model.eval()
+bdevice = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+bmodel.to(bdevice)
+bmodel.eval()
 
 def convert_wkt(text):
     return tagger.parse(text).strip()
@@ -34,7 +34,7 @@ def convert_feature(wkt_list):
     tokenized = tokenizer(wkt_list, padding=True, truncation=True, return_tensors="pt")
     input_ids = tokenized['input_ids'].to('cuda')
     with torch.no_grad():
-        outputs = model(input_ids)
+        outputs = bmodel(input_ids)
     pooler_output = outputs.pooler_output
     last_hidden_state = outputs.last_hidden_state
     return last_hiddn_state
