@@ -109,8 +109,8 @@ class LSTMTagger(nn.Module):
         return (autograd.Variable(torch.zeros(1, 1, self.hidden_dim)),
                 autograd.Variable(torch.zeros(1, 1, self.hidden_dim)))
 
-    def forward(self, line):
-        wakati_list = convert_wkt(line)
+    def forward(self, sentence):
+        wakati_list = convert_wkt(sentence)
         embeds = convert_feature(wakati_list)
         file = open('embeds.csv','a')
         file.write(str(embeds))
@@ -192,13 +192,13 @@ for epoch in range(EPOCHS):  # again, normally you would NOT do 300 epochs, it i
         # Step 3. Run our forward pass.
         with open("bdata.txt") as f:
             line = f.readlines()[count]
-        line = str(line)
+            sentence = line
         count += 1
         #wakati_list = convert_wkt(line)
         #sentence_in = wakati_list
         #sentence_in = convert_feature(wakati_list)
         
-        tag_scores = model(line)
+        tag_scores = model(sentence)
 
         # Step 4. Compute the loss, gradients, and update the parameters by
         #  calling optimizer.step()
