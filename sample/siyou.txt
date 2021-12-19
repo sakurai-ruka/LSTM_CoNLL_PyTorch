@@ -1,0 +1,4 @@
+1.tag.pyでniku1105.txtからkakikomi.txtを生成
+2.henkan.pyでkakikomi.txtをafter.pyに変換
+3.preprocessing.pyでファイルをpkl化
+4.LSTM.pyで処理
